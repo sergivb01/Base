@@ -71,8 +71,6 @@ public class BasePlugin extends JavaPlugin{
 	private KitExecutor kitExecutor;
 	//@Getter private ConfigFile langFile;
 
-	// TEST
-
 	public void onEnable(){
 		plugin = this;
 
