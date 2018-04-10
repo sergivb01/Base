@@ -4,6 +4,7 @@ import com.google.common.collect.HashBasedTable;
 import com.google.common.collect.Table;
 import net.minecraft.util.gnu.trove.iterator.TObjectIntIterator;
 import net.minecraft.util.gnu.trove.map.hash.TObjectIntHashMap;
+import net.veilmc.hcf.utils.ConfigurationService;
 import net.veilmc.util.cuboid.CoordinatePair;
 import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
@@ -40,7 +41,7 @@ public class MobstackListener extends BukkitRunnable implements Listener{
 		for(World world : Bukkit.getServer().getWorlds()){
 			if(world.getEnvironment() != World.Environment.THE_END){
 				for(LivingEntity entity : world.getLivingEntities()){
-					if(entity.getType().equals(EntityType.ENDERMAN) || entity.getType().equals(EntityType.SLIME))
+					if(entity.getType().equals(EntityType.ENDERMAN) || entity.getType().equals(EntityType.SLIME) || (entity.getType().equals(EntityType.ZOMBIE) && ConfigurationService.VEILZ))
 						return;
 					if((entity.isValid()) && (!(entity instanceof Player))){
 						for(Entity nearby : entity.getNearbyEntities(8.0D, 8.0D, 8.0D)){
@@ -57,7 +58,7 @@ public class MobstackListener extends BukkitRunnable implements Listener{
 
 	@EventHandler(ignoreCancelled = true, priority = EventPriority.HIGH)
 	public void onSpawnerSpawn(SpawnerSpawnEvent event){
-		if(event.getEntityType().equals(EntityType.ENDERMAN) || event.getEntityType().equals(EntityType.SLIME)){
+		if(event.getEntityType().equals(EntityType.ENDERMAN) || event.getEntityType().equals(EntityType.SLIME) || (event.getEntityType().equals(EntityType.ZOMBIE) && ConfigurationService.VEILZ)){
 			return;
 		}
 
@@ -90,7 +91,7 @@ public class MobstackListener extends BukkitRunnable implements Listener{
 	public void onCreatureSpawn(CreatureSpawnEvent event){
 		EntityType entityType = event.getEntityType();
 
-		if(entityType.equals(EntityType.ENDERMAN) || entityType.equals(EntityType.SLIME)){
+		if(entityType.equals(EntityType.ENDERMAN) || entityType.equals(EntityType.SLIME) || (entityType.equals(EntityType.ZOMBIE) && ConfigurationService.VEILZ)){
 			return;
 		}
 
@@ -181,7 +182,7 @@ public class MobstackListener extends BukkitRunnable implements Listener{
 		if(toremove.getType() != tostack.getType()){
 			return false;
 		}
-		if((toremove.getType() == EntityType.SLIME) || (toremove.getType() == EntityType.MAGMA_CUBE) || (tostack.getType() == EntityType.SLIME) || (tostack.getType() == EntityType.MAGMA_CUBE) || tostack.getType() == EntityType.VILLAGER){
+		if((toremove.getType() == EntityType.SLIME) || (toremove.getType() == EntityType.MAGMA_CUBE) || (tostack.getType() == EntityType.SLIME) || (tostack.getType() == EntityType.MAGMA_CUBE)  || (tostack.getType().equals(EntityType.ZOMBIE) && ConfigurationService.VEILZ) || tostack.getType() == EntityType.VILLAGER){
 			return false;
 		}
 		toremove.remove();
