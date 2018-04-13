@@ -14,8 +14,7 @@ import org.bukkit.plugin.java.JavaPlugin;
 
 import java.util.UUID;
 
-public class PlayTimeManager
-		implements Listener{
+public class PlayTimeManager implements Listener{
 	private final TObjectLongHashMap totalPlaytimeMap = new TObjectLongHashMap();
 	private final TObjectLongHashMap sessionTimestamps = new TObjectLongHashMap();
 	private final Config config;
