@@ -5,6 +5,12 @@ import com.google.common.collect.Lists;
 import net.veilmc.base.BasePlugin;
 import net.veilmc.base.command.BaseCommand;
 import net.veilmc.base.warp.Warp;
+import net.veilmc.hcf.faction.FactionManager;
+import net.veilmc.hcf.faction.type.Faction;
+import net.veilmc.hcf.faction.type.PlayerFaction;
+import net.veilmc.hcf.faction.type.SpawnFaction;
+import net.veilmc.hcf.HCF;
+import net.veilmc.hcf.timer.TimerManager;
 import net.veilmc.util.BukkitUtils;
 import net.veilmc.util.command.CommandArgument;
 import net.veilmc.util.command.CommandWrapper;
@@ -58,7 +64,15 @@ public class WarpExecutor extends BaseCommand implements Listener{
 			return true;
 		}
 		final CommandArgument argument = CommandWrapper.matchArgument(args[0], sender, this.arguments);
+		final Warp warp = this.plugin.getWarpManager().getWarp(args[0]);
 		if(argument == null){
+			Faction factionAt;
+			PlayerFaction playerFaction;
+			FactionManager factionManager = HCF.getPlugin().getFactionManager();
+			if ((factionAt = factionManager.getFactionAt(Bukkit.getPlayer(sender.getName()).getLocation())).isSafezone() && ((playerFaction = factionManager.getPlayerFaction((Player) sender)) == null || !factionAt.equals(playerFaction))) {
+				this.warpPlayer(Bukkit.getPlayer(sender.getName()), warp);
+				return true;
+			}
 			this.handleWarp(sender, args);
 			return true;
 		}
@@ -93,7 +107,12 @@ public class WarpExecutor extends BaseCommand implements Listener{
 			return true;
 		}
 		if(!sender.hasPermission(warp.getPermission())){
-			sender.sendMessage(ChatColor.RED + "Server warp '" + ChatColor.GRAY + args[0] + ChatColor.RED + "' not found.");
+			sender.sendMessage(ChatColor.RED + "You do not have permissions to teleport to '" + ChatColor.GRAY + args[0] + ChatColor.RED + "' warp.");
+			return false;
+		}
+		TimerManager timerManager = HCF.getPlugin().getTimerManager();
+		if (timerManager.spawnTagTimer.getRemaining(Bukkit.getPlayer(sender.getName())) > 0L) {
+			sender.sendMessage(ChatColor.RED + "You cannot use warps while Spawn Tag is active.");
 			return false;
 		}
 		final Player player = (Player) sender;
