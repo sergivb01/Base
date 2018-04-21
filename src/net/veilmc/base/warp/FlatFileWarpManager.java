@@ -91,7 +91,7 @@ public class FlatFileWarpManager
 				this.warpNameMap.put(warp.getName(), warp);
 			}
 		}
-		this.warpDelayMillis = TimeUnit.SECONDS.toMillis(2L);
+		this.warpDelayMillis = TimeUnit.SECONDS.toMillis((this.plugin.getConfig().get("warp-delay-seconds") != null) ? this.plugin.getConfig().getInt("warp-delay-seconds") : 10);
 		this.warpDelayTicks = (this.warpDelayMillis / 50L);
 		this.warpDelayWords = DurationFormatUtils.formatDurationWords(this.warpDelayMillis, true, true);
 	}
