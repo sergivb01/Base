@@ -15,7 +15,9 @@ import org.bukkit.*;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Entity;
+import org.bukkit.entity.EntityType;
 import org.bukkit.entity.Player;
+import org.bukkit.entity.Zombie;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.EventPriority;
 import org.bukkit.event.Listener;
@@ -30,6 +32,7 @@ import org.bukkit.inventory.meta.ItemMeta;
 import org.bukkit.scheduler.BukkitRunnable;
 import org.bukkit.scheduler.BukkitTask;
 
+import java.time.ZonedDateTime;
 import java.util.*;
 import java.util.concurrent.TimeUnit;
 
@@ -176,10 +179,16 @@ public class FreezeCommand extends BaseCommand implements Listener{
 		final Entity entity = event.getEntity();
 		if(entity instanceof Player){
 			final Player attacker = BukkitUtils.getFinalAttacker(event, false);
+			final Player player = (Player) entity;
+			if (event.getDamager() instanceof Zombie) {
+				if((this.getRemainingServerFrozenMillis() > 0L || this.getRemainingPlayerFrozenMillis(player.getUniqueId()) > 0L)) {
+					event.setCancelled(true);
+					return;
+				}
+			}
 			if(attacker == null){
 				return;
 			}
-			final Player player = (Player) entity;
 			if((this.getRemainingServerFrozenMillis() > 0L || this.getRemainingPlayerFrozenMillis(player.getUniqueId()) > 0L) && !player.hasPermission("base.freeze.bypass")){
 				attacker.sendMessage(ChatColor.RED + player.getName() + " is currently frozen, you can not attack them.");
 				event.setCancelled(true);
