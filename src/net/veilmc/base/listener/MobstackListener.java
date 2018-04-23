@@ -41,8 +41,9 @@ public class MobstackListener extends BukkitRunnable implements Listener{
 		for(World world : Bukkit.getServer().getWorlds()){
 			if(world.getEnvironment() != World.Environment.THE_END){
 				for(LivingEntity entity : world.getLivingEntities()){
-					if(entity.getType().equals(EntityType.ENDERMAN) || entity.getType().equals(EntityType.SLIME) || (entity.getType().equals(EntityType.ZOMBIE) && ConfigurationService.VEILZ))
-						return;
+					if(entity.getType().equals(EntityType.ENDERMAN) || entity.getType().equals(EntityType.SLIME) || (entity.getType().equals(EntityType.ZOMBIE) && ConfigurationService.VEILZ)) {
+					    return;
+                    }
 					if((entity.isValid()) && (!(entity instanceof Player))){
 						for(Entity nearby : entity.getNearbyEntities(8.0D, 8.0D, 8.0D)){
 							if(((nearby instanceof LivingEntity)) && (nearby.isValid()) && (!(nearby instanceof Player))){
