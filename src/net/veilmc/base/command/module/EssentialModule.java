@@ -51,6 +51,7 @@ public class EssentialModule
 		this.commands.add(new SudoCommand());
 		this.commands.add(new VanishCommand(plugin));
 		this.commands.add(new WhoisCommand(plugin));
+		this.commands.add(new DropsCommand(plugin));
 	}
 }
 

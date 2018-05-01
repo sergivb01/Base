@@ -8,9 +8,13 @@ import net.veilmc.base.command.module.EssentialModule;
 import net.veilmc.base.command.module.InventoryModule;
 import net.veilmc.base.command.module.TeleportModule;
 import net.veilmc.base.command.module.chat.ChatCommands;
+import net.veilmc.base.command.module.essential.DropsCommand;
 import net.veilmc.base.command.module.essential.PunishCommand;
 import net.veilmc.base.command.module.essential.ReportCommand;
 import net.veilmc.base.command.module.teleport.WorldCommand;
+import net.veilmc.base.drops.Drop;
+import net.veilmc.base.drops.DropsManager;
+import net.veilmc.base.drops.FlatFileDropsManager;
 import net.veilmc.base.kit.*;
 import net.veilmc.base.listener.*;
 import net.veilmc.base.task.AnnouncementHandler;
@@ -69,6 +73,8 @@ public class BasePlugin extends JavaPlugin{
 	private UserManager userManager;
 	@Getter
 	private KitExecutor kitExecutor;
+	@Getter
+	private DropsManager drop;
 	//@Getter private ConfigFile langFile;
 
 	public void onEnable(){
@@ -77,6 +83,7 @@ public class BasePlugin extends JavaPlugin{
 		Bukkit.getMessenger().registerOutgoingPluginChannel(this, "BungeeCord");
 
 		ConfigurationSerialization.registerClass(Warp.class);
+		ConfigurationSerialization.registerClass(Drop.class);
 		ConfigurationSerialization.registerClass(ServerParticipator.class);
 		ConfigurationSerialization.registerClass(BaseUser.class);
 		ConfigurationSerialization.registerClass(ConsoleUser.class);
@@ -107,6 +114,7 @@ public class BasePlugin extends JavaPlugin{
 		this.signHandler.cancelTasks(null);
 		this.userManager.saveParticipatorData();
 		this.warpManager.saveWarpData();
+		this.drop.saveDropData();
 
 		plugin = null;
 	}
@@ -123,6 +131,7 @@ public class BasePlugin extends JavaPlugin{
 		this.userManager = new UserManager(this);
 		this.itemDb = new SimpleItemDb(this);
 		this.warpManager = new FlatFileWarpManager(this);
+		this.drop = new FlatFileDropsManager(this);
 
 		try{
 			Lang.initialize("en_US");
@@ -146,6 +155,8 @@ public class BasePlugin extends JavaPlugin{
 		return this.kitExecutor;
 	}
 
+	public DropsManager getDropsManager() { return this.drop; }
+
 	private void registerListeners(){
 		PluginManager manager = this.getServer().getPluginManager();
 		manager.registerEvents(new WorldCommand(), this);
@@ -167,6 +178,7 @@ public class BasePlugin extends JavaPlugin{
 		manager.registerEvents(new ChatCommands(), this);
 		//manager.registerEvents(new AutoMuteListener(this), this);
 		manager.registerEvents(new StaffUtilsRemoveListener(), this);
+		manager.registerEvents(new DropsCommand(this), this);
 	}
 
 
