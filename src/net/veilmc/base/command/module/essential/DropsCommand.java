@@ -4,6 +4,7 @@ import net.md_5.bungee.api.ChatColor;
 import net.veilmc.base.BasePlugin;
 import net.veilmc.base.command.BaseCommand;
 import net.veilmc.base.drops.Drop;
+import net.veilmc.hcf.utils.ConfigurationService;
 import org.bukkit.Bukkit;
 import org.bukkit.Material;
 import org.bukkit.command.Command;
@@ -36,6 +37,10 @@ public class DropsCommand extends BaseCommand implements Listener {
     public boolean onCommand(CommandSender sender, Command cmd, String label, String[] args) {
         if (!(sender instanceof Player)) {
             sender.sendMessage(ChatColor.RED + "Only players can use this command.");
+            return true;
+        }
+        if (ConfigurationService.VEILZ) {
+            sender.sendMessage(ChatColor.RED + "This command is disabled on Veilz.");
             return true;
         }
         if (args.length != 0) {
