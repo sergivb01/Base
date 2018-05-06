@@ -40,7 +40,7 @@ public class DropsCommand extends BaseCommand implements Listener {
             return true;
         }
         if (ConfigurationService.VEILZ) {
-            sender.sendMessage(ChatColor.RED + "This command is disabled on Veilz.");
+            sender.sendMessage(ChatColor.RED + "This command is disabled on VeilZ.");
             return true;
         }
         if (args.length != 0) {
@@ -49,7 +49,7 @@ public class DropsCommand extends BaseCommand implements Listener {
         }
         Player player = (Player) sender;
         if (this.plugin.getDropsManager().getDrop(player.getUniqueId().toString()) == null) {
-            Bukkit.getConsoleSender().sendMessage(ChatColor.YELLOW + "New user registered on Drops database.");
+            Bukkit.getConsoleSender().sendMessage(ChatColor.YELLOW + "New user registered into Drops database.");
             Drop drop = new Drop(player.getUniqueId().toString(), true, true, true, true, true, true, true, true, true, true, true, true, true, true, true, true, true, true);
             this.plugin.getDropsManager().createDrop(drop);
         }
@@ -431,77 +431,25 @@ public class DropsCommand extends BaseCommand implements Listener {
     public void onItemPickupSetCancelled(PlayerPickupItemEvent event) {
         Player player = event.getPlayer();
         Drop drop = this.plugin.getDropsManager().getDrop(player.getUniqueId().toString());
-        if (event.getItem().getItemStack().getType() == Material.RAW_BEEF && drop.getBeef().equals(false)) {
-            event.setCancelled(true);
-            return;
-        }
-        if (event.getItem().getItemStack().getType() == Material.PORK && drop.getPork().equals(false)) {
-            event.setCancelled(true);
-            return;
-        }
-        if (event.getItem().getItemStack().getType() == Material.RAW_CHICKEN && drop.getChicken().equals(false)) {
-            event.setCancelled(true);
-            return;
-        }
-        if (event.getItem().getItemStack().getType() == Material.FEATHER && drop.getFeather().equals(false)) {
-            event.setCancelled(true);
-            return;
-        }
-        if (event.getItem().getItemStack().getType() == Material.WOOL && drop.getWool().equals(false)) {
-            event.setCancelled(true);
-            return;
-        }
-        if (event.getItem().getItemStack().getType() == Material.LEATHER && drop.getLeather().equals(false)) {
-            event.setCancelled(true);
-            return;
-        }
-        if (event.getItem().getItemStack().getType() == Material.MAGMA_CREAM && drop.getMagmacream().equals(false)) {
-            event.setCancelled(true);
-            return;
-        }
-        if (event.getItem().getItemStack().getType() == Material.GHAST_TEAR && drop.getGhasttear().equals(false)) {
-            event.setCancelled(true);
-            return;
-        }
-        if (event.getItem().getItemStack().getType() == Material.GOLD_NUGGET && drop.getNugget().equals(false)) {
-            event.setCancelled(true);
-            return;
-        }
-        if (event.getItem().getItemStack().getType() == Material.BLAZE_ROD && drop.getBlazerod().equals(false)) {
-            event.setCancelled(true);
-            return;
-        }
-        if (event.getItem().getItemStack().getType() == Material.SULPHUR && drop.getGunpowder().equals(false)) {
-            event.setCancelled(true);
-            return;
-        }
-        if (event.getItem().getItemStack().getType() == Material.ENDER_PEARL && drop.getEnderpearl().equals(false)) {
-            event.setCancelled(true);
-            return;
-        }
-        if (event.getItem().getItemStack().getType() == Material.ROTTEN_FLESH && drop.getFlesh().equals(false)) {
-            event.setCancelled(true);
-            return;
-        }
-        if (event.getItem().getItemStack().getType() == Material.ARROW && drop.getArrow().equals(false)) {
-            event.setCancelled(true);
-            return;
-        }
-        if (event.getItem().getItemStack().getType() == Material.BONE && drop.getBone().equals(false)) {
-            event.setCancelled(true);
-            return;
-        }
-        if (event.getItem().getItemStack().getType() == Material.STRING && drop.getStringItem().equals(false)) {
-            event.setCancelled(true);
-            return;
-        }
-        if (event.getItem().getItemStack().getType() == Material.SPIDER_EYE && drop.getSpidereye().equals(false)) {
-            event.setCancelled(true);
-            return;
-        }
-        if (event.getItem().getItemStack().getType() == Material.SLIME_BALL && drop.getSlimeball().equals(false)) {
-            event.setCancelled(true);
-            return;
+        if (drop != null) {
+            if (event.getItem().getItemStack().getType() == Material.RAW_BEEF && drop.getBeef().equals(false)) event.setCancelled(true);
+            if (event.getItem().getItemStack().getType() == Material.PORK && drop.getPork().equals(false)) event.setCancelled(true);
+            if (event.getItem().getItemStack().getType() == Material.RAW_CHICKEN && drop.getChicken().equals(false)) event.setCancelled(true);
+            if (event.getItem().getItemStack().getType() == Material.FEATHER && drop.getFeather().equals(false)) event.setCancelled(true);
+            if (event.getItem().getItemStack().getType() == Material.WOOL && drop.getWool().equals(false)) event.setCancelled(true);
+            if (event.getItem().getItemStack().getType() == Material.LEATHER && drop.getLeather().equals(false)) event.setCancelled(true);
+            if (event.getItem().getItemStack().getType() == Material.MAGMA_CREAM && drop.getMagmacream().equals(false)) event.setCancelled(true);
+            if (event.getItem().getItemStack().getType() == Material.GHAST_TEAR && drop.getGhasttear().equals(false)) event.setCancelled(true);
+            if (event.getItem().getItemStack().getType() == Material.GOLD_NUGGET && drop.getNugget().equals(false)) event.setCancelled(true);
+            if (event.getItem().getItemStack().getType() == Material.BLAZE_ROD && drop.getBlazerod().equals(false)) event.setCancelled(true);
+            if (event.getItem().getItemStack().getType() == Material.SULPHUR && drop.getGunpowder().equals(false)) event.setCancelled(true);
+            if (event.getItem().getItemStack().getType() == Material.ENDER_PEARL && drop.getEnderpearl().equals(false)) event.setCancelled(true);
+            if (event.getItem().getItemStack().getType() == Material.ROTTEN_FLESH && drop.getFlesh().equals(false)) event.setCancelled(true);
+            if (event.getItem().getItemStack().getType() == Material.ARROW && drop.getArrow().equals(false)) event.setCancelled(true);
+            if (event.getItem().getItemStack().getType() == Material.BONE && drop.getBone().equals(false)) event.setCancelled(true);
+            if (event.getItem().getItemStack().getType() == Material.STRING && drop.getStringItem().equals(false)) event.setCancelled(true);
+            if (event.getItem().getItemStack().getType() == Material.SPIDER_EYE && drop.getSpidereye().equals(false)) event.setCancelled(true);
+            if (event.getItem().getItemStack().getType() == Material.SLIME_BALL && drop.getSlimeball().equals(false)) event.setCancelled(true);
         }
     }
 
