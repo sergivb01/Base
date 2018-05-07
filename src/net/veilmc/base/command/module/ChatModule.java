@@ -22,6 +22,7 @@ public class ChatModule
 		this.commands.add(new MessageSpyCommand(plugin));
 		this.commands.add(new ReplyCommand(plugin));
 		this.commands.add(new ToggleMessagesCommand(plugin));
+		this.commands.add(new ToggleMsgCommand(plugin));
 	}
 }
 

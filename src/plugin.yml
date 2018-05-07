@@ -180,3 +180,4 @@ commands:
   world:
     description: Change your current world.
   drops:
+  togglemsg:
