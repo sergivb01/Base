@@ -91,10 +91,11 @@ public class ToggleMsgCommand extends BaseCommand implements Listener {
             if (baseUser.isInStaffChat()) {
                 baseUser.setInStaffChat(false);
                 event.getMessage().replace(event.getMessage(), "!" + event.getMessage());
-                baseUser.setInStaffChat(true);
+                statusstaffchat = true;
             }
             Bukkit.dispatchCommand(player, "msg " + target + " " + event.getMessage());
             event.setCancelled(true);
+            if (statusstaffchat) baseUser.setInStaffChat(true);
         }
     }
 }
