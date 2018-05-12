@@ -46,7 +46,6 @@ public class VanishCommand
 		baseUser.setVanished(target, newVanished, true);
 		if(baseUser.isStaffUtil()){
 			p.getInventory().setItem(8, StaffUtilitiesCommand.getVanishTool(newVanished));
-			p.sendMessage("changed");
 		}
 		sender.sendMessage(ChatColor.YELLOW + "Vanish mode of " + target.getName() + " set to " + newVanished + '.');
 		return true;
