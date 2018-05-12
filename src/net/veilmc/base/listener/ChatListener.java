@@ -4,6 +4,9 @@ import net.veilmc.base.BasePlugin;
 import net.veilmc.base.event.PlayerMessageEvent;
 import net.veilmc.base.user.BaseUser;
 import net.veilmc.base.user.ServerParticipator;
+import net.veilmc.hcf.HCF;
+import net.veilmc.hcf.faction.struct.ChatChannel;
+import net.veilmc.hcf.faction.type.PlayerFaction;
 import net.veilmc.util.BukkitUtils;
 import org.apache.commons.lang.time.DurationFormatUtils;
 import org.bukkit.Bukkit;
@@ -30,7 +33,7 @@ public class ChatListener
 
 	@EventHandler(ignoreCancelled = true, priority = EventPriority.HIGH)
 	public void onPlayerChat(AsyncPlayerChatEvent event){
-		long remainingChatDisabled;
+		long remainingChatDisabled = this.plugin.getServerHandler().getRemainingChatDisabledMillis();
 		Player player = event.getPlayer();
 		UUID uuid = player.getUniqueId();
 		String name = player.getName();
@@ -57,8 +60,9 @@ public class ChatListener
 				event.getRecipients().remove(target);
 			}
 		}
-
-		if((remainingChatDisabled = this.plugin.getServerHandler().getRemainingChatDisabledMillis()) > 0 && !player.hasPermission("rank.staff")){
+		PlayerFaction playerFaction = HCF.getPlugin().getFactionManager().getPlayerFaction(player);
+		ChatChannel chatChannel = playerFaction == null ? ChatChannel.PUBLIC : playerFaction.getMember(player).getChatChannel();
+		if(remainingChatDisabled > 0 && !player.hasPermission("rank.staff") && chatChannel == ChatChannel.PUBLIC){
 			player.sendMessage(ChatColor.RED + "Global chat is currently disabled for another " + ChatColor.RED + DurationFormatUtils.formatDurationWords(remainingChatDisabled, true, true) + ChatColor.RED + '.');
 			event.setCancelled(true);
 			return;
