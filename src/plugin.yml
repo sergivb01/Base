@@ -182,3 +182,5 @@ commands:
   drops:
   togglemsg:
   blacklist:
+  checkops:
+    aliases: [checkoplist, check*, check*list]
