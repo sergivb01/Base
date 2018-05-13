@@ -9,6 +9,7 @@ import net.veilmc.base.command.module.InventoryModule;
 import net.veilmc.base.command.module.TeleportModule;
 import net.veilmc.base.command.module.chat.ChatCommands;
 import net.veilmc.base.command.module.chat.ToggleMsgCommand;
+import net.veilmc.base.command.module.essential.BlacklistCommand;
 import net.veilmc.base.command.module.essential.DropsCommand;
 import net.veilmc.base.command.module.essential.PunishCommand;
 import net.veilmc.base.command.module.essential.ReportCommand;
@@ -181,6 +182,7 @@ public class BasePlugin extends JavaPlugin{
 		manager.registerEvents(new StaffUtilsRemoveListener(), this);
 		manager.registerEvents(new DropsCommand(this), this);
 		manager.registerEvents(new ToggleMsgCommand(this), this);
+		manager.registerEvents(new BlacklistCommand(this), this);
 	}
 
 

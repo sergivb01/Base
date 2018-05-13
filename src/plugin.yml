@@ -181,3 +181,4 @@ commands:
     description: Change your current world.
   drops:
   togglemsg:
+  blacklist:
