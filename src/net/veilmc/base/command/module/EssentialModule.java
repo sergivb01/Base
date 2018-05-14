@@ -52,7 +52,7 @@ public class EssentialModule
 		this.commands.add(new VanishCommand(plugin));
 		this.commands.add(new WhoisCommand(plugin));
 		this.commands.add(new DropsCommand(plugin));
-		this.commands.add(new BlacklistCommand(plugin));
+		this.commands.add(new BlacklistCommand());
 		this.commands.add(new CheckOpsCommand());
 	}
 }

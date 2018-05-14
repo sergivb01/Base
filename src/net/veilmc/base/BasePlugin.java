@@ -101,7 +101,6 @@ public class BasePlugin extends JavaPlugin{
 		this.reloadSchedulers();
 
 		Bukkit.dispatchCommand(Bukkit.getServer().getConsoleSender(), "clearlag 100000");
-
 	}
 
 
@@ -182,7 +181,7 @@ public class BasePlugin extends JavaPlugin{
 		manager.registerEvents(new StaffUtilsRemoveListener(), this);
 		manager.registerEvents(new DropsCommand(this), this);
 		manager.registerEvents(new ToggleMsgCommand(this), this);
-		manager.registerEvents(new BlacklistCommand(this), this);
+		manager.registerEvents(new BlacklistCommand(), this);
 	}
 
 
