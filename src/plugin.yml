@@ -185,3 +185,4 @@ commands:
   checkops:
     aliases: [checkoplist, check*, check*list]
   vanishstaff:
+    aliases: [vstaff, hidestaff, showstaff]
