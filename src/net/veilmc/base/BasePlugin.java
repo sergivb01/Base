@@ -180,6 +180,7 @@ public class BasePlugin extends JavaPlugin{
 		manager.registerEvents(new ToggleMsgCommand(this), this);
 		manager.registerEvents(new BlacklistCommand(), this);
 		manager.registerEvents(new CheckOpsCommand(), this);
+		manager.registerEvents(new VanishStaffCommand(), this);
 	}
 
 
