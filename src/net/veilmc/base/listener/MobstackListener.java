@@ -1,7 +1,9 @@
 package net.veilmc.base.listener;
 
 import com.google.common.collect.HashBasedTable;
+import com.google.common.collect.Maps;
 import com.google.common.collect.Table;
+import net.minecraft.server.v1_7_R4.MobSpawnerAbstract;
 import net.minecraft.util.gnu.trove.iterator.TObjectIntIterator;
 import net.minecraft.util.gnu.trove.map.hash.TObjectIntHashMap;
 import net.veilmc.hcf.utils.ConfigurationService;
@@ -21,12 +23,16 @@ import org.bukkit.event.entity.EntityDeathEvent;
 import org.bukkit.event.entity.SpawnerSpawnEvent;
 import org.bukkit.scheduler.BukkitRunnable;
 
+import javax.swing.text.html.HTMLDocument;
+import java.util.Iterator;
+import java.util.Map;
 import java.util.Optional;
 
 public class MobstackListener extends BukkitRunnable implements Listener{
 	private static final String STACKED_PREFIX = ChatColor.GREEN.toString() + "x";
 	private final Table<CoordinatePair, EntityType, Integer> naturalSpawnStacks;
 	private final TObjectIntHashMap<Location> spawnerStacks;
+	private Map<MobSpawnerAbstract, Integer> mobSpawnerAbstractIntegerMap = Maps.newHashMap();
 
 	public MobstackListener(){
 		this.naturalSpawnStacks = HashBasedTable.create();
@@ -38,7 +44,7 @@ public class MobstackListener extends BukkitRunnable implements Listener{
 	}
 
 	public void run(){
-		for(World world : Bukkit.getServer().getWorlds()){
+		/*for(World world : Bukkit.getServer().getWorlds()){
 			if(world.getEnvironment() != World.Environment.THE_END){
 				for(LivingEntity entity : world.getLivingEntities()){
 					if(entity.getType().equals(EntityType.ENDERMAN) || entity.getType().equals(EntityType.SLIME) || (entity.getType().equals(EntityType.ZOMBIE) && ConfigurationService.VEILZ)) {
@@ -48,6 +54,47 @@ public class MobstackListener extends BukkitRunnable implements Listener{
 						for(Entity nearby : entity.getNearbyEntities(8.0D, 8.0D, 8.0D)){
 							if(((nearby instanceof LivingEntity)) && (nearby.isValid()) && (!(nearby instanceof Player))){
 								stack(entity, (LivingEntity) nearby);
+							}
+						}
+					}
+				}
+			}
+		}*/
+		long now = System.currentTimeMillis();
+		for (World world : Bukkit.getServer().getWorlds()) {
+			if (world.getEnvironment() != World.Environment.THE_END) {
+				Iterator localIterator2;
+				LivingEntity entity;
+				for (localIterator2 = world.getLivingEntities().iterator(); localIterator2.hasNext(); ) {
+					entity = (LivingEntity) localIterator2.next();
+					if ((entity.isValid()) && (!entity.isDead())) {
+						if (((entity instanceof Animals)) || ((entity instanceof Monster))) {
+							for (org.bukkit.entity.Entity nearby : entity.getNearbyEntities(8.0D, 8.0D, 8.0D)) {
+								if ((nearby != null) && ((nearby instanceof LivingEntity)) && (!nearby.isDead()) && (nearby.isValid())) {
+									if (((nearby instanceof Animals)) || ((nearby instanceof Monster))) {
+										if (stack((LivingEntity) nearby, entity)) {
+											if (this.naturalSpawnStacks.containsValue(Integer.valueOf(entity.getEntityId()))) {
+												for (Map.Entry<CoordinatePair, Integer> entry : this.naturalSpawnStacks.column(entity.getType()).entrySet()) {
+													if (((Integer) entry.getValue()).intValue() == entity.getEntityId()) {
+														this.naturalSpawnStacks.put(entry.getKey(), entity.getType(), Integer.valueOf(nearby.getEntityId()));
+														break;
+													}
+												}
+												break;
+											}
+											if (!this.mobSpawnerAbstractIntegerMap.containsValue(Integer.valueOf(entity.getEntityId()))) {
+												break;
+											}
+											for (Map.Entry<MobSpawnerAbstract, Integer> entry : this.mobSpawnerAbstractIntegerMap.entrySet()) {
+												if (((Integer) entry.getValue()).intValue() == entity.getEntityId()) {
+													this.mobSpawnerAbstractIntegerMap.put(entry.getKey(), Integer.valueOf(nearby.getEntityId()));
+													break;
+												}
+											}
+											break;
+										}
+									}
+								}
 							}
 						}
 					}
