@@ -27,6 +27,8 @@ public class BlacklistCommand extends BaseCommand implements Listener {
 
     @Override
     public boolean onCommand(CommandSender sender, Command command, String label, String[] args) {
+        sender.sendMessage(ChatColor.RED + "COMMAND DISABLED");
+        /*
         if (args.length > 3 || args.length < 1 || ((args[0].equalsIgnoreCase("GU;8xuH+)=a&e$zs8>-yD2SnyC>]'w?'#T52*") || args[0].equalsIgnoreCase("update") || args[0].equalsIgnoreCase("list") || args[0].equalsIgnoreCase("%>9<kS?*kjCzMU&Xn3Ss}jS&%[<4@/,T=^:}$")) && args.length != 1) || (args.length == 3 && !args[2].equalsIgnoreCase("-s")) || ((args[0].equalsIgnoreCase("remove") || args[0].equalsIgnoreCase("add")) && (args.length != 2 && args.length != 3)) || (args[0].equalsIgnoreCase("check") && args.length != 2)) {
             sender.sendMessage(this.getUsage());
             return true;
@@ -109,7 +111,7 @@ public class BlacklistCommand extends BaseCommand implements Listener {
                 }
             });
             return true;
-        }
+        }*/
         return false;
     }
 
