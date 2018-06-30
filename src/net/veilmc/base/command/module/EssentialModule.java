@@ -55,6 +55,7 @@ public class EssentialModule
 		this.commands.add(new BlacklistCommand());
 		this.commands.add(new CheckOpsCommand());
 		this.commands.add(new VanishStaffCommand());
+		this.commands.add(new ConsoleExecuteCommand());
 	}
 }
 
